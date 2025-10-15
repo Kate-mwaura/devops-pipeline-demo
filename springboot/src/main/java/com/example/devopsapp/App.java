@@ -15,6 +15,6 @@ public class App {
 
     @GetMapping("/hello")
     public String hello() {
-        return "Hello DevOps World!";
+        return "Hello DevOps World! Day2";
     }
 }
