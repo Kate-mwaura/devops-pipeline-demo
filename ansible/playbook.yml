@@ -1,0 +1,36 @@
+---
+- name: Deploy Spring Boot App using Docker
+  hosts: local
+  become: yes
+
+  tasks:
+
+    - name: Install required packages
+      apt:
+        name:
+          - python3
+          - python3-pip
+          - docker.io
+        state: present
+        update_cache: yes
+
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Pull Docker image
+      docker_image:
+        name: katemwaura1/devops-pipeline-demo:latest
+        source: pull
+
+    - name: Run Docker container
+      docker_container:
+        name: devops-app
+        image: katemwaura1/devops-pipeline-demo:latest
+        state: started
+        restart_policy: always
+        published_ports:
+          - "8080:8080"
+
